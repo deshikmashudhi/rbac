@@ -22,7 +22,7 @@ roleRef :
  apiGroup: rbac.authorization.k8s.io
  kind: ClusterRole
  name: admin-role
-subjects:
+subjects: #user groups services 
  - kind: ServiceAccount
    name: admin
    namespace: default
