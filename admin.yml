@@ -4,27 +4,34 @@ metadata:
   name: roboshop
 
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: roboshop
+
+---
 apiVersion: rbac.authorization.k8s.io/v1
-Kind: Role
+kind: Role
 metadata: 
   namespace: roboshop
   name: roboshop-admin
 rules:
-- apiGroups: [""] #this indicates the core api group
+- apiGroups: [""]  # This indicates the core API group
   resources: ["*"]
-  verbs: ["*"]  #actions on resources get list create read update delete
+  verbs: ["*"]  # Actions on resources: get, list, create, update, delete
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-Kind: RoleBinding
+kind: RoleBinding
 metadata:
   name: roboshop-admin
-  namespace: roboshop-admin
-subjects: #you can specify more than one subject
-- Kind: User
+  namespace: roboshop  # Change this to match the Role's namespace
+subjects:  # You can specify more than one subject
+- kind: User
   name: kops
-  apiGroupp: rbac.authorization.k8s.io
-roleref:
-#"roleRef" specific the binding to a role /cluster role
-  Kind: Role #this must be role or clusterole
-  name: roboshop-admin #this msut match the name of the role or cluster role you wish to bind to 
+  apiGroup: rbac.authorization.k8s.io  # Corrected the typo here
+roleRef:
+  # "roleRef" specifies the binding to a role / cluster role
+  kind: Role  # This must be Role or ClusterRole
+  name: roboshop-admin  # This must match the name of the Role or ClusterRole you wish to bind to
   apiGroup: rbac.authorization.k8s.io
