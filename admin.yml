@@ -38,7 +38,6 @@ roleRef:
   kind: Role  # This must be Role or ClusterRole
   name: roboshop-admin  # This must match the name of the Role or ClusterRole you wish to bind to
   apiGroup: rbac.authorization.k8s.io
----
 # apiVersion: rbac.authorization.k8s.io
 # kind: ClusterRoleBinding
 # metadata:
