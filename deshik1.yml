@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: deshik  # Optional if you are only focusing on RBAC for listing nodes
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: roboshop-reader
+rules:
+- apiGroups: [""]  # Core API group
+  resources: ["nodes"]
+  verbs: ["get", "list", "watch"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: deshik-roboshop-reader
+subjects:
+- kind: User
+  name: deshik
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: roboshop-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::590183758323:role/eksctl-rbac-nodegroup-eks-node-NodeInstanceRole-dPmctrfJTEvm
+      username: system:node:{{EC2PrivateDNSName}}
+  mapUsers: |
+    - userarn: arn:aws:iam::590183758323:user/deshik
+      username: deshik
+      groups:
+        - roboshop-reader  # Instead of system:masters, use specific role
