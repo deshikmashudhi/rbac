@@ -65,7 +65,7 @@ data:
     - roboshop-admin
       - system:masters
       userarn: arn:aws:iam::590183758323:user/deshik
-      username: kops
+      username: deshik
 kind: ConfigMap
 metadata:
   creationTimestamp: "2024-10-29T03:59:29Z"
