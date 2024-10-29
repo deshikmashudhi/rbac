@@ -64,8 +64,8 @@ data:
   mapUsers: |
     - roboshop-admin
       - system:masters
-      userarn: arn:aws:iam::590183758323:user/deshik
-      username: deshik
+      userarn: arn:aws:iam::590183758323:user/kops
+      username: kops
 kind: ConfigMap
 metadata:
   annotations:
