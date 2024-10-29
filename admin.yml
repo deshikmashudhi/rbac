@@ -13,15 +13,15 @@ rules:
 - apiGroups: [""]  # This indicates the core API group
   resources: ["*"]
   verbs: ["*"]  # Actions on resources: get, list, create, update, delete
-# ---
-# apiVersion: rbac.authorization.k8s.io/v1
-# kind: ClusterRole
-# metadata:
-#   name: roboshop-cluster-reader
-# rules:
-# - apiGroups: ["v1","apps/v1"]
-#   resources: ["secrets","nodes","namespaces","persistentvolumes"]
-#   verbs: ["get","watch","list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: roboshop-cluster-reader
+rules:
+- apiGroups: ["v1","apps/v1"]
+  resources: ["secrets","nodes","namespaces","persistentvolumes"]
+  verbs: ["get","watch","list"]
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -38,14 +38,19 @@ roleRef:
   kind: Role  # This must be Role or ClusterRole
   name: roboshop-admin  # This must match the name of the Role or ClusterRole you wish to bind to
   apiGroup: rbac.authorization.k8s.io
-# apiVersion: rbac.authorization.k8s.io
-# kind: ClusterRoleBinding
-# metadata:
-#   name: roboshop-cluster-reader
-# subjects: 
-# - kind: User
-#   name: kops
-#   apiGroup: 
+---
+apiVersion: rbac.authorization.k8s.io
+kind: ClusterRoleBinding
+metadata:
+  name: roboshop-cluster-reader
+subjects: 
+- kind: User
+  name: kops
+  apiGroup: rbac.authorization.k8s.io
+roleRef: 
+  kind: ClusterRole
+  name: roboshop-cluster-reader
+  apiGroup: rbac.authorization.k8s.io
 # ---
 # configuration file for giving acces 
 # we need click this command and edit this for changing roles and users
