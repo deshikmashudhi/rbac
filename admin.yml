@@ -54,6 +54,11 @@ roleRef:
 # aws eks update-kubeconfig --region us-east-1 --name rbac
 ---
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+  creationTimestamp: "2024-10-29T03:59:29Z"
 data:
   mapRoles: |
     - groups:
@@ -62,18 +67,13 @@ data:
       rolearn: arn:aws:iam::590183758323:role/eksctl-rbac-nodegroup-eks-node-NodeInstanceRole-dPmctrfJTEvm
       username: system:node:{{EC2PrivateDNSName}}
   mapUsers: |
-    - roboshop-admin
-      - system:masters
-      userarn: arn:aws:iam::590183758323:user/kops
+    - userarn: arn:aws:iam::590183758323:user/kops
       username: kops
-kind: ConfigMap
-metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","data":{"mapRoles":"- groups:\n  - system:bootstrappers\n  - system:nodes\n  rolearn: arn:aws:iam::590183758323:role/eksctl-rbac-nodegroup-eks-node-NodeInstanceRole-dPmctrfJTEvm\n  username: system:node:{{EC2PrivateDNSName}}\n","mapUsers":"- roboshop-admin\n  - system:masters\n  userarn: arn:aws:iam::590183758323:user/kops\n  username: kops\n"},"kind":"ConfigMap","metadata":{"annotations":{},"creationTimestamp":"2024-10-29T03:59:29Z","name":"aws-auth","namespace":"kube-system","resourceVersion":"1397","uid":"0a6bf816-3877-4cb0-afd2-f93bd8bd713d"}}
-  creationTimestamp: "2024-10-29T03:59:29Z"
-  name: aws-auth
-  namespace: kube-system
-  resourceVersion: "18294"
-  uid: 0a6bf816-3877-4cb0-afd2-f93bd8bd713d
+      groups:
+        - system:masters
+    - userarn: arn:aws:iam::590183758323:user/roboshop-admin
+      username: roboshop-admin
+      groups:
+        - system:masters
+
 
